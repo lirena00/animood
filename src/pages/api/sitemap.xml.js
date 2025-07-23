@@ -25,6 +25,12 @@ export default function handler(req, res) {
       priority: "0.8",
     },
     {
+      url: "/mood",
+      lastmod: currentDate,
+      changefreq: "weekly",
+      priority: "0.8",
+    },
+    {
       url: "/faq",
       lastmod: currentDate,
       changefreq: "monthly",
