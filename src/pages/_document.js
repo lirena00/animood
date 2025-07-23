@@ -23,22 +23,6 @@ export default function Document() {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link rel="manifest" href="/site.webmanifest" />
-
-        {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-        <link rel="preconnect" href="https://graphql.anilist.co" />
-
-        {/* DNS prefetch for performance */}
-        <link
-          rel="dns-prefetch"
-          href="https://analytics-eta-green.vercel.app"
-        />
 
         {/* Web App Manifest */}
         <meta name="mobile-web-app-capable" content="yes" />
