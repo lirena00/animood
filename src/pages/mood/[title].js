@@ -5,40 +5,27 @@ import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import Wrapper from "@/components/wrapper";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
-export default function Mood(res) {
+export default function MoodPage({ initialData, initialMood }) {
   const { data: session } = useSession();
-  const [loading, setLoading] = useState(false);
-  const [mood, setMood] = useState("");
-  const [response, setResponse] = useState(null);
+  const router = useRouter();
+  const [loading, setLoading] = useState(!initialData);
+  const [mood, setMood] = useState(initialMood || "");
+  const [response, setResponse] = useState(initialData);
   const [sort, setSort] = useState("TRENDING_DESC");
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    if (res) {
-      const { data } = res;
-      setResponse(data);
+    if (initialData) {
+      setResponse(initialData);
     }
-  }, [res]);
+  }, [initialData]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `/api/gpt?mood=${encodeURIComponent(mood)}`,
-        {
-          method: "POST",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      setResponse(data);
-    } catch (error) {
-      console.error("There was an error!", error);
+    if (mood) {
+      router.push(`/mood/${encodeURIComponent(mood)}`);
     }
   };
 
@@ -48,6 +35,7 @@ export default function Mood(res) {
 
   useEffect(() => {
     if (response) {
+      setLoading(true);
       var accessToken = "";
       if (session) {
         accessToken = session.user.token;
@@ -65,7 +53,7 @@ export default function Mood(res) {
         Page(perPage: 48) {
           media(sort: ${sort} type: ANIME tag:"${response.tags}" genre:"${
         response.genre
-      }" isAdult:false ${session ? "onList:false" : ""} ) {
+      }" isAdult:false ${session ? "onList:false" : ""}) {
             id
             title {
               romaji
@@ -78,7 +66,6 @@ export default function Mood(res) {
             duration
             episodes
             bannerImage
-            episodes
             meanScore
             externalLinks {
               id
@@ -110,6 +97,7 @@ export default function Mood(res) {
         })
         .catch((error) => {
           console.error("Error:", error);
+          setLoading(false);
         });
     }
   }, [response, session, sort]);
@@ -117,8 +105,97 @@ export default function Mood(res) {
   return (
     <>
       <Head>
-        <title>Animood | Mood</title>
-        <meta name="title" content="Animood" />
+        <title>
+          {initialMood
+            ? `Animood - ${initialMood} Anime Recommendations`
+            : "Animood - Mood-Based Anime Recommendations"}
+        </title>
+        <meta
+          name="description"
+          content={
+            initialMood
+              ? `Discover perfect anime recommendations for when you're feeling ${initialMood}. AI-powered suggestions tailored to your current mood and emotional state.`
+              : "Get personalized anime recommendations based on your current mood with AI-powered suggestions."
+          }
+        />
+        <meta
+          name="keywords"
+          content={`${
+            initialMood || "mood"
+          } anime, anime recommendations, mood-based anime, ${
+            initialMood || "emotional"
+          } anime suggestions, AI anime recommendations`}
+        />
+        <meta name="author" content="Animood" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#23A9D5" />
+
+        <link
+          rel="canonical"
+          href={`https://animood.lirena.in/mood/${
+            initialMood ? encodeURIComponent(initialMood) : ""
+          }`}
+        />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content={
+            initialMood
+              ? `Animood - ${initialMood} Anime Recommendations`
+              : "Animood - Mood-Based Anime Recommendations"
+          }
+        />
+        <meta
+          property="og:description"
+          content={
+            initialMood
+              ? `Discover perfect anime recommendations for when you're feeling ${initialMood}. AI-powered suggestions tailored to your current mood.`
+              : "Get personalized anime recommendations based on your current mood with AI-powered suggestions."
+          }
+        />
+        <meta
+          property="og:url"
+          content={`https://animood.lirena.in/mood/${
+            initialMood ? encodeURIComponent(initialMood) : ""
+          }`}
+        />
+        <meta
+          property="og:image"
+          content="https://animood.lirena.in/animood.jpg"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Animood" />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content={
+            initialMood
+              ? `Animood - ${initialMood} Anime Recommendations`
+              : "Animood - Mood-Based Anime Recommendations"
+          }
+        />
+        <meta
+          name="twitter:description"
+          content={
+            initialMood
+              ? `Discover perfect anime recommendations for when you're feeling ${initialMood}. AI-powered suggestions tailored to your current mood.`
+              : "Get personalized anime recommendations based on your current mood with AI-powered suggestions."
+          }
+        />
+        <meta
+          name="twitter:image"
+          content="https://animood.lirena.in/animood.jpg"
+        />
+
+        {/* Additional meta tags */}
+        <meta name="application-name" content="Animood" />
       </Head>
 
       <Wrapper>
@@ -180,8 +257,8 @@ export default function Mood(res) {
             )}
 
             {data && data.length > 0 && (
-              <div className="relative space-y-4">
-                <div className="flex gap-2 absolute right-3  items-center">
+              <div className="relative space-y-4 w-full">
+                <div className="flex gap-2 absolute right-3 -top-2 items-center">
                   <select
                     value={sort}
                     onChange={(e) => setSort(e.target.value)}
@@ -207,6 +284,11 @@ export default function Mood(res) {
                 </div>
               </div>
             )}
+            {data && data.length === 0 && !loading && (
+              <div className="text-white text-xl">
+                No results found for this mood. Try another!
+              </div>
+            )}
           </div>
         </main>
       </Wrapper>
@@ -215,38 +297,48 @@ export default function Mood(res) {
 }
 
 export const getServerSideProps = async (context) => {
+  const { title } = context.params;
+
+  if (!title) {
+    return {
+      notFound: true,
+    };
+  }
+
   try {
-    var mood = context.query.mood;
-    if (!mood) {
+    const req = context.req;
+    const protocol = req.headers["x-forwarded-proto"] || "http";
+    const baseUrl = req ? `${protocol}://${req.headers.host}` : "";
+    const response = await fetch(
+      `${baseUrl}/api/gpt?mood=${encodeURIComponent(title)}`,
+      {
+        method: "POST",
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Network response was not ok");
       return {
         props: {
-          data: null,
+          initialData: null,
+          initialMood: title,
         },
       };
     }
-  } catch (e) {
+    const data = await response.json();
     return {
       props: {
-        data: null,
+        initialData: data,
+        initialMood: title,
+      },
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      props: {
+        initialData: null,
+        initialMood: title,
       },
     };
   }
-  const req = context.req;
-  const baseUrl = req ? `http://${req.headers.host}` : "";
-  const response = await fetch(
-    `${baseUrl}/api/gpt?mood=${encodeURIComponent(mood)}`,
-    {
-      method: "POST",
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
-  }
-  const data = await response.json();
-  return {
-    props: {
-      data,
-    },
-  };
 };

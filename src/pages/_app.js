@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { useEffect } from "react";
 import Router from "next/router";
-
+import Script from "next/script";
 export const progress = new ProgressBar({
   size: 4,
   color: "#23A9D5",
@@ -42,13 +42,14 @@ export default function App({
   return (
     <>
       <SessionProvider session={session}>
-        <Head>
-          <script
-            defer
+        {process.env.NODE_ENV === "production" && (
+          <Script
             src="https://analytics-eta-green.vercel.app/script.js"
             data-website-id="049ebcd8-241d-480d-814c-ef7fc8746c59"
-          ></script>
-        </Head>
+            strategy="afterInteractive"
+          />
+        )}
+
         <Component {...pageProps} />
       </SessionProvider>
     </>

@@ -65,7 +65,8 @@ function Anilist() {
         const data = await response.json();
         const recommendations = data?.data?.Page?.recommendations || [];
 
-        const uniqueRecommendations = filterUniqueRecommendations(recommendations);
+        const uniqueRecommendations =
+          filterUniqueRecommendations(recommendations);
         const filteredAnime = filterNonAnime(uniqueRecommendations);
 
         setRecommended(filteredAnime);
@@ -97,7 +98,59 @@ function Anilist() {
   return (
     <>
       <Head>
-        <title>Animood | Title</title>
+        <title>Animood - AniList-Based Anime Recommendations</title>
+        <meta
+          name="description"
+          content="Get personalized anime recommendations based on your complete AniList anime collection. Discover new anime tailored to your viewing preferences and rated anime."
+        />
+        <meta
+          name="keywords"
+          content="anilist recommendations, anime list recommendations, personalized anime, anilist integration, anime suggestions based on list"
+        />
+        <meta name="author" content="Animood" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#23A9D5" />
+
+        <link rel="canonical" href="https://animood.lirena.in/anilist" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Animood - AniList-Based Anime Recommendations"
+        />
+        <meta
+          property="og:description"
+          content="Get personalized anime recommendations based on your complete AniList anime collection. Discover new anime tailored to your viewing preferences."
+        />
+        <meta property="og:url" content="https://animood.lirena.in/anilist" />
+        <meta
+          property="og:image"
+          content="https://animood.lirena.in/animood.jpg"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Animood" />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Animood - AniList-Based Anime Recommendations"
+        />
+        <meta
+          name="twitter:description"
+          content="Get personalized anime recommendations based on your complete AniList anime collection. Discover new anime tailored to your viewing preferences."
+        />
+        <meta
+          name="twitter:image"
+          content="https://animood.lirena.in/animood.jpg"
+        />
+
+        {/* Additional meta tags */}
+        <meta name="application-name" content="Animood" />
       </Head>
 
       <Wrapper>
@@ -111,7 +164,9 @@ function Anilist() {
             <>
               <p className="font-semibold text-gray-300 mb-2 relative pl-1 mt-4 text-xl md:text-xl lg:text-2xl">
                 <span className="bg-action h-full absolute left-0 top-0 bottom-0 w-1"></span>
-                <span className="ml-3 font-semibold">Based on your Anime List</span>
+                <span className="ml-3 font-semibold">
+                  Based on your Anime List
+                </span>
               </p>
               <div className="flex flex-col w-full overflow-hidden">
                 <motion.div

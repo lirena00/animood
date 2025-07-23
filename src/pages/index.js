@@ -11,34 +11,67 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Animood</title>
-        <meta name="title" content="Animood" />
+        <title>
+          Animood - AI-Powered Anime Recommendations Based on Your Mood
+        </title>
+        <meta
+          name="title"
+          content="Animood - AI-Powered Anime Recommendations Based on Your Mood"
+        />
         <meta
           name="description"
-          content="Animood is AI based anime recommendation website which recommends you anime based on your mood, history and overall anime list."
+          content="Discover perfect anime recommendations with Animood's AI technology. Get personalized anime suggestions based on your mood, watch history, and AniList data. Find your next favorite anime now!"
         />
+        <meta
+          name="keywords"
+          content="anime recommendations, AI anime, mood-based anime, anime suggestion, anilist recommendations, anime discovery, personalized anime"
+        />
+        <meta name="author" content="Animood" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#23A9D5" />
+        <link rel="canonical" href="https://animood.lirena.in/" />
+
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://animood.vercel.app" />
-        <meta property="og:title" content="Animood" />
+        <meta property="og:url" content="https://animood.lirena.in/" />
+        <meta
+          property="og:title"
+          content="Animood - AI-Powered Anime Recommendations Based on Your Mood"
+        />
         <meta
           property="og:description"
-          content="Animood is AI based anime recommendation website which recommends you anime based on your mood, history and overall anime list."
+          content="Discover perfect anime recommendations with Animood's AI technology. Get personalized anime suggestions based on your mood, watch history, and AniList data."
         />
-        <meta property="og:image" content="/animood.jpg" />
+        <meta
+          property="og:image"
+          content="https://animood.lirena.in/animood.jpg"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Animood" />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://animood.vercel.app" />
-        <meta property="twitter:title" content="Animood" />
+        <meta property="twitter:url" content="https://animood.lirena.in/" />
+        <meta
+          property="twitter:title"
+          content="Animood - AI-Powered Anime Recommendations Based on Your Mood"
+        />
         <meta
           property="twitter:description"
-          content="Animood is AI based anime recommendation website which recommends you anime based on your mood, history and overall anime list."
+          content="Discover perfect anime recommendations with Animood's AI technology. Get personalized anime suggestions based on your mood, watch history, and AniList data."
         />
-        <meta property="twitter:image" content="/animood.jpg" />
-        <meta name="theme-color" content="#23A9D5" />
+        <meta
+          property="twitter:image"
+          content="https://animood.lirena.in/animood.jpg"
+        />
       </Head>
       <main
         className={`bg-primary flex min-h-screen flex-col items-center z-10 justify-between p-4 `}
       >
-        <ChangeLog/>
+        <ChangeLog />
         <div className="flex flex-col w-full space-y-4">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -54,7 +87,7 @@ export default function Home() {
                 onSubmit={(e) => {
                   e.preventDefault(); // Prevent the default form submission behavior
                   const keyword = e.target.search.value;
-                  router.push("/mood?mood=" + encodeURIComponent(keyword));
+                  router.push(`/mood/${encodeURIComponent(keyword)}`);
                 }}
               >
                 <input
@@ -100,7 +133,7 @@ export default function Home() {
                           <Link
                             key={moodIndex}
                             className="flex-shrink-0"
-                            href={`/mood?mood=${mood}`}
+                            href={`/mood/${mood}`}
                           >
                             <div className="text-gray-500 text-sm rounded-full py-1.5 px-4 bg-white hover:scale-105 transition-all duration-300">
                               {mood}

@@ -5,7 +5,59 @@ function FAQ() {
   return (
     <>
       <Head>
-        <title>Animood | FAQ</title>
+        <title>Animood - Frequently Asked Questions (FAQ)</title>
+        <meta
+          name="description"
+          content="Find answers to frequently asked questions about Animood's AI-powered anime recommendation system, mood-based suggestions, and how to get personalized anime recommendations."
+        />
+        <meta
+          name="keywords"
+          content="animood faq, anime recommendations help, frequently asked questions, animood support, how to use animood"
+        />
+        <meta name="author" content="Animood" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#23A9D5" />
+
+        <link rel="canonical" href="https://animood.lirena.in/faq" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Animood - Frequently Asked Questions (FAQ)"
+        />
+        <meta
+          property="og:description"
+          content="Find answers to frequently asked questions about Animood's AI-powered anime recommendation system and how to get personalized anime suggestions."
+        />
+        <meta property="og:url" content="https://animood.lirena.in/faq" />
+        <meta
+          property="og:image"
+          content="https://animood.lirena.in/animood.jpg"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Animood" />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Animood - Frequently Asked Questions (FAQ)"
+        />
+        <meta
+          name="twitter:description"
+          content="Find answers to frequently asked questions about Animood's AI-powered anime recommendation system and how to get personalized anime suggestions."
+        />
+        <meta
+          name="twitter:image"
+          content="https://animood.lirena.in/animood.jpg"
+        />
+
+        {/* Additional meta tags */}
+        <meta name="application-name" content="Animood" />
       </Head>
       <Wrapper>
         <main
